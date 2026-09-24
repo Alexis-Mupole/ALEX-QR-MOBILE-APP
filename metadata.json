@@ -1,0 +1,6 @@
+{
+  "name": "AlexQr",
+  "description": "Offline QR Scanner & Designer Generator with custom styling, real-time CameraX & ML Kit decoding, and persistent history with zero internet permissions.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
