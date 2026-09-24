@@ -25,7 +25,7 @@
 
 Unlike cloud-dependent QR utilities that track user scans or inject advertisements, **AlexQr is strictly 100% offline**:
 - **Zero Internet Permissions**: `android.permission.INTERNET` is **not** declared in `AndroidManifest.xml`.
-- **Zero Remote Tracking**: Every scan, code generation, and history entry stays strictly inside your device's encrypted local SQLite database via Android Room.
+- **Zero Remote Tracking**: Every scan, code generation, and history entry stays strictly inside your device's private, sandboxed local SQLite database via Android Room.
 - **Zero Battery Waste**: Includes a dedicated Power-Saver mode that throttles camera frame processing and pauses heavy animations when your battery is low.
 
 Created with passion by **MUPOLE UWIZEYE Alexis** ([alexismupole.dev](https://alexismupole.dev)).
@@ -37,10 +37,10 @@ Created with passion by **MUPOLE UWIZEYE Alexis** ([alexismupole.dev](https://al
 ### 📷 1. High-Performance Real-Time Scanner
 - **ML Kit On-Device Barcode Engine**: Instant zero-lag detection of standard QR codes, Micro-QR, and 2D barcodes.
 - **CameraX Lifecycle-Safe Architecture**: Automatically unbinds and rebinds camera sessions during app suspension to prevent memory leaks and background battery drain.
-- **Hardware Controls**:
+- **Hardware & Input Controls**:
   - Direct hardware torch/flash toggle.
-  - Pinch-to-zoom and double-tap zoom gestures.
-  - Tap-to-focus with visual targeting ring.
+  - Scan QR codes from a saved gallery image (fully on-device).
+  - One-tap shortcut to the curated Samples Hub.
 - **Laser Scanner Overlay**: Smooth, battery-optimized animated laser reticle indicating the scanning boundary.
 
 ### 🎨 2. Custom QR Designer Engine
@@ -56,9 +56,9 @@ Created with passion by **MUPOLE UWIZEYE Alexis** ([alexismupole.dev](https://al
   - Smooth Circular Finder Corners
 - **Color Palettes & Custom Hex**:
   - Independent Foreground and Background color pickers.
-  - Pre-curated palettes (Indigo, Emerald, Crimson, Royal Purple, Amber, Slate, Pitch Black, Clean White).
+  - Pre-curated palettes (Pitch Black, Electric Cyan, Deep Indigo, Royal Violet, Emerald, Crimson, Amber).
 - **Center Logo Integration**:
-  - Built-in vector icons: Star, Heart, QR Shield, Link, Shield Check.
+  - Built-in vector icons: Star, Heart, Link, Wi-Fi, User, and the AlexQr logo.
   - Custom image gallery picker: Embed your own personal avatar, brand icon, or photo in the center.
 - **Bottom Call-to-Action Text Banner**:
   - Add customizable text banners below the QR code (e.g., *"SCAN ME"*, *"PAY HERE"*, *"CONNECT TO WIFI"*, *"VISIT WEBSITE"*).
@@ -71,41 +71,40 @@ Created with passion by **MUPOLE UWIZEYE Alexis** ([alexismupole.dev](https://al
 Scanned codes are automatically analyzed and partitioned into rich semantic types with one-tap action handlers:
 - **🌐 Web URLs**: Direct browser launch.
 - **📶 Wi-Fi Networks**: SSID, Password, and Security Type (WPA/WEP/None) with quick-copy.
-- **📇 Contacts (vCard / MeCard)**: Name, phone, email, company, and address with one-tap contact import.
+- **📇 Contacts (vCard / MeCard)**: Name, phone, and email with one-tap contact import.
 - **💬 SMS & Text**: Pre-populated phone number and SMS body with direct messaging app intent.
 - **📞 Phone Numbers**: Direct dialer intent.
 - **✉️ Email**: Recipient, Subject, and Body pre-filled into default mail client.
 - **📍 Geo Coordinates**: Latitude & Longitude mapped to Google Maps / default navigation app.
-- **💰 Cryptocurrencies**: Bitcoin (`bitcoin:`) and Ethereum (`ethereum:`) addresses with one-tap wallet dispatch.
 - **📄 Plain Text**: Markdown and text viewer with clipboard copy.
 
 ### 📚 4. Curated Samples Hub
 - Built-in library of ready-to-test templates:
-  - Office Wi-Fi Network
   - Developer Portfolio (alexismupole.dev)
-  - Business Executive vCard
-  - Bitcoin Cold Wallet Address
-  - SMS Helpdesk Dispatch
-  - Conference Location Geo-Pin
+  - Professional vCard Contact
+  - Secure Guest Wi-Fi Network
+  - Emergency Contact Hotline
+  - Developer Feedback Email
+  - Kigali Innovation City Geo Pin
 - Tap any template to immediately load it into the Designer or preview its parsed action sheet.
 
-### 💾 5. Persistent Local History & Bookmarks
+### 💾 5. Persistent Local History
 - **Local Room Database (SQLite)**: Fully persistent record of all scanned and generated codes.
-- **Favorite / Bookmark**: Pin important codes for quick retrieval.
-- **Live Search & Filter**: Filter by scan vs. generate, or search across raw text and timestamps.
-- **Export & Privacy Controls**:
-  - Export history to CSV.
-  - Bulk wipe history with a single confirmation.
+- **Live Search & Filter**: Filter by scanned vs. generated codes, or search across raw text.
+- **Share & Privacy Controls**:
+  - Re-share any saved QR code through the native Android share sheet.
+  - Delete individual records or bulk-wipe history with a single confirmation.
 
 ### ⚙️ 6. Full App Personalization & Power-Saver
 - **Multi-Theme Dynamic Color Palettes**:
-  - 🌌 Cyber Indigo
-  - 🌿 Emerald Forest
-  - 🌅 Sunset Crimson
+  - 🔵 Electric Blue
+  - 🌿 Emerald Green
   - 🔮 Royal Purple
-  - ☀️ Amber Gold
-  - 🪨 Minimal Slate
-- **Theme Modes**: Dark Mode, Light Mode, and System Default.
+  - 🌅 Sunset Orange
+  - 🌹 Rose Pink
+  - 🩵 Cyber Cyan
+  - 🪨 Deep Slate
+- **Theme Modes**: System Default, Light, Dark, and AMOLED.
 - **Power Saver Mode**: Limits camera analysis frame rate and disables laser scanner animation to maximize battery life on long scanning sessions.
 - **First-Run Onboarding Guide**: Interactive tutorial explaining key features, dismissible with a *"Do not show again"* option.
 - **Responsive UI Across Devices**: Adaptive layouts optimized for compact phones, foldables, and large tablet screens with unified 16.dp–24.dp rounded surfaces.
@@ -172,8 +171,8 @@ app/src/main/java/com/example/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/your-username/alexqr.git
-   cd alexqr
+   git clone https://github.com/Alexis-Mupole/ALEX-QR-MOBILE-APP.git
+   cd ALEX-QR-MOBILE-APP
    ```
 
 2. Open the project in Android Studio or build directly using the Gradle wrapper:
@@ -194,11 +193,12 @@ app/src/main/java/com/example/
 
 ## 🧪 Testing
 
-AlexQr includes comprehensive local JVM unit tests using **JUnit 4** and **Robolectric**:
+AlexQr includes local JVM unit tests using **JUnit 4** and **Robolectric** (under `app/src/test/java/com/example/`):
 
-- **QrCodeGenerator Tests**: Validates BitMatrix generation, logo composition, and bottom text banner calculation under `ErrorCorrectionLevel.H`.
-- **ParsedQrContent Tests**: Validates regex and URL/Wi-Fi/vCard parsing logic.
-- **QrStyleConfig Tests**: Validates JSON serialization and deserialization for style persistence.
+- **Generator Tests**: Validate ZXing `BitMatrix` generation via `QrCodeGenerator.generateMatrix()`.
+- **Parser Tests**: Validate Wi-Fi payload parsing via `ParsedQrContent.parse()`.
+- **Style Tests**: Validate `QrStyleConfig` JSON serialization round-trips.
+- **Robolectric Tests**: Validate `MainActivity` launch, string resources, and app-name resolution.
 
 Run the test suite:
 ```bash

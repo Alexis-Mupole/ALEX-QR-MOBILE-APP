@@ -22,8 +22,8 @@ By participating in this project, you agree to abide by the [Code of Conduct](CO
 
 2. **Fork and Clone**:
    ```bash
-   git clone https://github.com/<your-username>/alexqr.git
-   cd alexqr
+   git clone https://github.com/Alexis-Mupole/ALEX-QR-MOBILE-APP.git
+   cd ALEX-QR-MOBILE-APP
    ```
 
 3. **Open in Android Studio**:

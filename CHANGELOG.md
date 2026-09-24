@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Core Real-Time Scanner**:
   - Integrated Google ML Kit Barcode Scanning with CameraX.
   - Added hardware flash/torch toggle.
-  - Added tap-to-focus and pinch-to-zoom gestures.
+  - Added on-device scan-from-gallery-image support.
   - Added animated laser reticle overlay for targeting.
   - Added battery-conscious lifecycle safety (camera automatically unbinds when inactive).
 - **Custom QR Code Designer Studio**:
@@ -23,23 +23,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Dot geometry options: Square, Rounded Rectangles, and Circular Dots.
   - Eye corner geometry options: Square, Rounded, and Circle.
   - Color styling: Foreground and background color pickers with curated palette presets and custom hex support.
-  - Center logo placement: Built-in icons (Star, Heart, QR Shield, Link, Security Shield) and photo picker for custom gallery images.
+  - Center logo placement: Built-in icons (Star, Heart, Link, Wi-Fi, User, AlexQr logo) and photo picker for custom gallery images.
   - Bottom call-to-action text banner (e.g. *"SCAN ME"*, *"PAY HERE"*, *"CONNECT TO WIFI"*) with custom background and text color controls.
   - Anti-aliased high-DPI Bitmap rendering.
   - Direct native sharing via Android `FileProvider` and direct local device saving.
 - **Intelligent Parser & Action Dispatcher**:
-  - URLs, Wi-Fi credentials, vCards / MeCards, SMS, Phone dialer, Email, Geo coordinates, and Cryptocurrencies (Bitcoin & Ethereum).
+  - URLs, Wi-Fi credentials, vCards / MeCards, SMS, Phone dialer, Email, and Geo coordinates.
 - **Samples Hub**:
-  - Pre-configured, one-tap templates for Wi-Fi, vCards, Developer Portfolio, Crypto addresses, and SMS dispatch.
+  - Pre-configured, one-tap templates for URLs, vCards, Wi-Fi, Phone, Email, and Geo locations.
 - **Local Persistence & History**:
   - Android Room SQLite local database persistence with reactive `Flow` queries.
   - Filterable by Scanned vs. Generated codes.
-  - Bookmark favorites for quick access.
   - Real-time search by text payload and metadata.
-  - CSV export and bulk history wipe.
+  - Native share of saved codes and bulk history wipe.
 - **App Personalization & Settings**:
-  - 6 Material 3 color themes (Indigo Cyber, Emerald Forest, Sunset Crimson, Royal Purple, Amber Gold, Slate Minimal).
-  - Theme mode options: Dark Mode, Light Mode, and Follow System.
+  - 7 Material 3 color themes (Electric Blue, Emerald Green, Royal Purple, Sunset Orange, Rose Pink, Cyber Cyan, Deep Slate).
+  - Theme mode options: System, Light, Dark, and AMOLED.
   - Power-Saver Mode: Limits frame rate analysis and disables heavy animations to conserve battery.
   - First-time user onboarding tour with *"Do not show again"* option.
 - **About Developer Screen**:

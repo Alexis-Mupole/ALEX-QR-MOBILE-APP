@@ -42,11 +42,11 @@ The UI is 100% declarative, implemented using **Jetpack Compose** and **Material
   - Tablets / Foldables: Employs wide layouts with accessible touch targets.
 - **Screens**:
   - `HomeScreen.kt`: Production dashboard featuring live statistics, quick scan/design action cards, curated feature badges, and privacy certification.
-  - `ScannerScreen.kt`: Camera viewfinder with hardware flash toggle, pinch zoom, tap focus, and bottom sheet action inspector.
+  - `ScannerScreen.kt`: Camera viewfinder with hardware flash toggle, gallery-image scanning, and bottom sheet action inspector.
   - `DesignerScreen.kt`: Real-time studio for crafting custom QR codes with shapes, eye styles, palettes, logo insertion, and call-to-action text banners.
-  - `SamplesHubScreen.kt`: Quick-load library with pre-configured templates (Wi-Fi, vCard, Crypto, URLs).
+  - `SamplesHubScreen.kt`: Quick-load library with pre-configured templates (URL, vCard, Wi-Fi, Phone, Email, Geo).
   - `HistoryScreen.kt`: Searchable and filterable history log backed by Room SQLite.
-  - `SettingsScreen.kt`: App personalization (6 color palettes, dark/light theme, power saver mode, storage wipe).
+  - `SettingsScreen.kt`: App personalization (7 color palettes, System/Light/Dark/AMOLED theme modes, power saver mode, storage wipe).
   - `AboutDeveloperScreen.kt`: Dedicated portfolio page honoring Alexis Mupole.
 
 ---
@@ -55,8 +55,8 @@ The UI is 100% declarative, implemented using **Jetpack Compose** and **Material
 - **Single Source of UI State**: The `MainViewModel` exposes reactive `StateFlow` streams collected safely using `collectAsStateWithLifecycle()` in composables.
 - **Key Flows**:
   - `historyList`: Emits reactive list of `QrRecordEntity` objects from Room.
-  - `selectedPalette`: Emits current `ThemePalette` (Indigo, Emerald, Sunset, etc.).
-  - `darkThemeConfig`: Emits theme mode (`SYSTEM`, `DARK`, `LIGHT`).
+  - `selectedPalette`: Emits current `ThemePalette` (Electric Blue, Emerald Green, Royal Purple, etc.).
+  - `darkThemeConfig`: Emits theme mode (`SYSTEM`, `LIGHT`, `DARK`, `AMOLED`).
   - `powerSaverMode`: Boolean toggle controlling frame rate throttling and animation suppression.
   - `styleConfig`: Live configuration object representing the active QR design state.
   - `lastScanResult`: Most recently decoded barcode payload.
@@ -85,8 +85,8 @@ The generator transforms raw text into a styled, high-scannability Android `Bitm
 
 ### 4. Scanner Engine (`com.example.scanner.CameraView`)
 - **CameraX + ML Kit Integration**: Uses CameraX's `ImageAnalysis.Builder` connected to Google ML Kit's `BarcodeScanning.getClient()`.
-- **Target Formats**: Strictly configured for `Barcode.FORMAT_QR_CODE` and 2D barcodes for maximum throughput.
-- **Power Saver Throttling**: When power-saver mode is active, the analyzer introduces a frame skip delay (150ms) to reduce CPU cycles and battery consumption.
+- **Target Formats**: Uses the default ML Kit barcode client, decoding all supported 1D/2D barcode formats.
+- **Power Saver Throttling**: Standard mode throttles analysis to max 20 fps (~50ms interval); power-saver mode reduces this to max 8 fps (~125ms interval) to cut CPU cycles and battery consumption.
 - **Lifecycle Bound**: The camera lifecycle is bound to the local `LocalLifecycleOwner`. Unbinding occurs immediately on disposal to prevent background camera hold.
 
 ---
@@ -95,12 +95,12 @@ The generator transforms raw text into a styled, high-scannability Android `Bitm
 - **Room Database (`AppDatabase.kt`)**: Local SQLite database storing scan and generation events with zero cloud exposure.
 - **`QrRecordEntity.kt`**:
   - `id`: Auto-incrementing primary key.
-  - `content`: Raw text / payload.
-  - `type`: `SCAN` or `GENERATE`.
-  - `contentType`: Semantic type (`URL`, `WIFI`, `VCARD`, `TEXT`, `CRYPTO`, etc.).
+  - `recordType`: `SCANNED` or `GENERATED`.
+  - `rawContent`: Raw text / payload.
+  - `contentType`: Semantic type (`URL`, `WIFI`, `CONTACT`, `SMS`, `EMAIL`, `GEO`, `PHONE`, `TEXT`).
+  - `title`: Display title for the record.
+  - `stylingParameters`: Serialized JSON styling parameters.
   - `timestamp`: Long Unix epoch time.
-  - `isFavorite`: Boolean bookmark flag.
-  - `styleConfigJson`: Serialized styling parameters.
 - **`PreferencesManager.kt`**: Backed by Android `SharedPreferences` for fast synchronous retrieval of user settings (theme palette, dark mode preference, power saver flag, onboarding completion).
 
 ---
@@ -109,7 +109,7 @@ The generator transforms raw text into a styled, high-scannability Android `Bitm
 
 1. **Error Correction Level H**: Guarantees fast, robust decoding under glare, low light, and physical print wear.
 2. **Power-Saver Mode**:
-   - Halves the frequency of ML Kit image analysis frames.
+   - Reduces ML Kit image analysis from max 20 fps to max 8 fps.
    - Stops continuous laser scan sweep animations.
 3. **Bitmap Recycling**: Generator bitmaps are allocated cleanly in memory and shared via Android `FileProvider` without memory leaks.
 4. **Offline Zero-Network Guarantee**: Eliminates battery drain caused by network polling, analytics beacons, and advertising SDKs.

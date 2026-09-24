@@ -22,7 +22,7 @@ AlexQr is engineered from the ground up to be **strictly 100% offline**:
 1. **No Internet Permission**:
    Reviewing `app/src/main/AndroidManifest.xml` confirms that `android.permission.INTERNET` is not requested or declared. The Android operating system enforces that this app cannot make outbound network connections or receive inbound socket traffic.
 2. **Local Storage Only**:
-   All scan records, generated barcodes, user preferences, and theme choices are stored exclusively on device using an encrypted local SQLite database (Android Room) and private app preferences.
+   All scan records, generated barcodes, user preferences, and theme choices are stored exclusively on device inside the app's sandboxed private data directory, using an Android Room SQLite database and private `SharedPreferences`. No data is transmitted off the device.
 3. **No Third-Party Trackers or Analytics**:
    The app contains zero telemetry SDKs, zero crash-reporting services that send data off-device, and zero advertising libraries.
 4. **Camera Safety**:
